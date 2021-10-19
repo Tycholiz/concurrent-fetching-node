@@ -1,7 +1,7 @@
-import * as express from "express";
+import { Application, Request, Response } from "express";
 
-export const register = (app: express.Application) => {
-    app.get('/api/ping', (req: express.Request, res: express.Response) => {
+export const register = (app: Application) => {
+    app.get('/api/ping', (req: Request, res: Response) => {
         console.log('hey!');
         
         res.sendStatus(200)
