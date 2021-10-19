@@ -1,5 +1,5 @@
 import { Application, Request, Response } from "express";
-import getPosts from './getPosts'
+import { getPosts } from './getPosts'
 
 export const register = (app: Application) => {
     app.get('/api/ping', (req: Request, res: Response) => {
