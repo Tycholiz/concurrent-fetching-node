@@ -12,6 +12,11 @@ export const register = (app: Application) => {
     app.get('/api/posts', (req: Request, res: Response) => {
         const { tags, sortBy, direction } = req.query
 
+        if (direction !== 'asc' && direction !== 'desc') {
+            res.status(400).json({ error: "sortBy parameter is invalid" })
+            return
+        }
+
         if (!tags) {
             res.status(400).json({ error: "Tags parameter is required" })
             return
