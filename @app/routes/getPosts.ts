@@ -1,11 +1,18 @@
 import axios from 'axios'
-import { Post } from '../global'
+import { AscendingDescending, Post, SortByOptions } from '../global'
+import { arrayToObject } from '../utils'
 
 
-export const getPosts = async (tagList: string[]) => {
-    console.log(tagList);
+export const getPosts = async (tagList: string[], sortBy: SortByOptions = 'id', direction: AscendingDescending = 'asc'): Promise<Post[]> => {
+// export const getPosts = async (tagList: string[]): Promise<Post[]> => {
+    const requests = tagList.map(tag => axios.get(`https://api.hatchways.io/assessment/blog/posts?tag=${tag}`))
+
+    const responses = await Promise.all(requests)
+
+    const dataFromAllQueries: Array<Array<Post>> = responses.map(response => (response as any).data.posts)
+
+    /* Transform to array to remove duplicate pairs */
+    const allDataAsObj = arrayToObject(dataFromAllQueries.flat(), sortBy)
     
-    const url = `https://api.hatchways.io/assessment/blog/posts?tag=${tagList[0]}`
-    const { data } = await axios.get(url)
-    console.log((data as any).posts);
+    return Object.values(allDataAsObj)
 }

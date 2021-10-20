@@ -7,3 +7,7 @@ export interface Post {
     reads: number
     tags: string[]
 }
+
+export type SortByOptions = 'id' | 'reads' | 'likes' | 'popularity'
+
+export type AscendingDescending = 'asc' | 'desc'
