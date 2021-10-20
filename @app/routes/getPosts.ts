@@ -12,6 +12,8 @@ export const getPosts = async (tagList: string[], sortBy: SortByOptions = 'id', 
 
     /* Transform to array to remove duplicate pairs */
     const allDataAsObj = arrayToObject(dataFromAllQueries.flat(), sortBy)
-    
-    return direction === 'desc' ? Object.values(allDataAsObj).reverse() : Object.values(allDataAsObj)
+
+    const sorted = Object.values(allDataAsObj).sort((a: Post, b: Post) => (a[sortBy] - b[sortBy]))
+    const ordered = direction === 'desc' ? sorted.reverse() : sorted
+    return ordered
 }
